@@ -6,7 +6,7 @@ public class Counter {
 	private Integer id;
 	List<Integer> requestTypeServable;
 	
-	void nextCustomer() {
-		
+	Integer nextCustomer() {
+		return 0;
 	}
 }
