@@ -109,4 +109,12 @@ public class Service {
 	void printAllStats(){
 
 	}
+
+	//reset all queues every morning
+	void resetQueues(){
+		for(RequestType rt:requestTypes){
+			rt.reset();
+		}
+		System.out.println("All queues are empty");
+	}
 }

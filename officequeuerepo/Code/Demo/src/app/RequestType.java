@@ -45,5 +45,9 @@ public class RequestType {
 	Float getAverageTime() {
 		return this.averageTime;
 	}
+
+	String getInfoQueues(){
+		return "Numbers of people in queue"+this.toString()+" : "+this.count()+"\n";
+	}
 	
 }
