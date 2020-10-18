@@ -16,10 +16,10 @@ public class DAO {
             "WHERE R.ref_type = RT.id " +
             "GROUP BY RT.tag_name ";
     //Get the number of customers each counter has served divided by request type
-    private final static String GET_STATS_PER_COUNTER_SELECT = "SELECT RT.tag_name as Request_Type, R.counter as Counter, COUNT(*) AS Customers";
+    private final static String GET_STATS_PER_COUNTER_SELECT = "SELECT RT.tag_name as Request_Type, R.ref_counter as Counter, COUNT(*) AS Customers";
     private final static String GET_STATS_PER_COUNTER = "FROM request R, request_type RT " +
             "WHERE R.ref_type = RT.id " +
-            "GROUP BY R.counter, RT.tag_name ";
+            "GROUP BY R.ref_counter, RT.tag_name ";
 
     //Constructor
     public DAO() throws SQLException, ClassNotFoundException {
@@ -57,11 +57,11 @@ public class DAO {
         Statement st = con.createStatement();
         return switch (DayWeekMonth) {
             case 'w' -> st.executeQuery(GET_STATS_PER_COUNTER_SELECT + ",WEEK(R.date) " +
-                    GET_STATS_PER_COUNTER + " ,WEEK(R.date) ORDER BY R.counter ASC");
+                    GET_STATS_PER_COUNTER + " ,WEEK(R.date) ORDER BY R.ref_counter ASC");
             case 'm' -> st.executeQuery(GET_STATS_PER_COUNTER_SELECT + ",MONTH(R.date) " +
-                    GET_STATS_PER_COUNTER + " ,MONTH(R.date) ORDER BY R.counter ASC");
+                    GET_STATS_PER_COUNTER + " ,MONTH(R.date) ORDER BY R.ref_counter ASC");
             default -> st.executeQuery(GET_STATS_PER_COUNTER_SELECT + ",R.date " +
-                    GET_STATS_PER_COUNTER + " ,R.date ORDER BY R.counter ASC");
+                    GET_STATS_PER_COUNTER + " ,R.date ORDER BY R.ref_counter ASC");
         };
     }
 }
