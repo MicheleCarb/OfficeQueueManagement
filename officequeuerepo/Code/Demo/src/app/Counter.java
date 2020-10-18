@@ -6,7 +6,11 @@ public class Counter {
 	private Integer id;
 	List<Integer> requestTypeServable;
 	
-	Integer nextCustomer() {
-		return 0;
+	void nextCustomer(List<RequestType> requestTypes) {
+		
+	}
+	
+	Boolean canServeRequestType(Integer idRequestType) {
+		return requestTypeServable.stream().findAny().isPresent();
 	}
 }

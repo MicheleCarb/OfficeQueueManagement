@@ -7,4 +7,8 @@ public class Ticket {
 	Ticket() {
 		
 	}
+	
+	Integer getId() {
+		return this.id;
+	}
 }
