@@ -52,6 +52,13 @@ public class Service {
 	}
 	
 	Ticket getTicket() {
+
+		String tagName = null;
+
+		// Calculating the minimum waiting time in minutes (as asked)
+		double Tr;
+		double tr = requestTypes.stream().filter(tagName).findFirst(tagName).getAverageTime();
+
 		return null;
 	}
 	
@@ -98,8 +105,14 @@ public class Service {
 				.get()
 				;
 		
-		queue.removeTicket();
+		Integer ticketId = queue.removeTicket();
+		printTurn(queue.getId(), ticketId);
+
 		
+	}
+
+	void printTurn(Integer id, Integer ticketId) {
+		System.out.println("We are now serving: " + id + "-" + ticketId);
 	}
 	
 	void watchStatistics() {
@@ -109,6 +122,7 @@ public class Service {
 	void printAllStats(){
 
 	}
+
 
 	//reset all queues every morning
 	void resetQueues(){

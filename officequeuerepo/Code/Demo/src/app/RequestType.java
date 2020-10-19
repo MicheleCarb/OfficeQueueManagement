@@ -21,13 +21,13 @@ public class RequestType {
 		queue.addLast(t);
 	}
 	
-	void removeTicket() {
-		queue.removeFirst();
+	Integer removeTicket() { // Return the first ticket in the queue
+		return queue.removeFirst().getId();
 	}
 	
 	@Override
 	public String toString() {
-		return tagName;
+		return this.tagName;
 	}
 	
 	void reset() {
@@ -48,6 +48,16 @@ public class RequestType {
 
 	String getInfoQueues(){
 		return "Numbers of people in queue"+this.toString()+" : "+this.count()+"\n";
+	}
+
+	Integer countTicketAhead(Ticket t) { // AKA count()
+		Integer count = 0;
+		for (Ticket tk: queue) {
+			if(tk.equals(t))
+				return count;
+			count++;
+		}
+		return -1; // Ticket not found in the queue
 	}
 	
 }
