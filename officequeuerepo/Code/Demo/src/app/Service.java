@@ -54,7 +54,26 @@ public class Service {
 	Ticket getTicket(int idRequestType) {
      //receive from the menu the id of the selected type of request
 
-		Ticket t = new Ticket(idRequestType);
+		float Tr;
+
+		float tr = requestTypes.stream()
+				.filter(requestType -> requestType.getId().equals(idRequestType))
+				.collect(Collectors.toList()).get(0)
+				.getAverageTime();
+
+		Integer nr = requestTypes.stream()
+				.filter(requestType -> requestType.getId().equals(idRequestType))
+				.collect(Collectors.toList()).get(0)
+				.count();
+
+		float sum = 0;
+		for (Counter c: counters) {
+			sum += (((float)1/c.count()) * (c.canServeRequestType(idRequestType) ? 1:0));
+		}
+
+		Tr = tr * ((nr / sum) + (float)1/2);
+
+		Ticket t = new Ticket(idRequestType, Tr);
 
 		requestTypes.stream()
 				.filter( requestType -> requestType.getId().equals(idRequestType) )

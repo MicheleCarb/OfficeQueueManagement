@@ -5,10 +5,12 @@ import java.util.List;
 public class Counter {
 	private Integer id;
 	List<Integer> requestTypeServable;
-	
-	void nextCustomer(List<RequestType> requestTypes) {
-		
+
+	Integer count() {
+		return requestTypeServable.size();
 	}
+
+
 	
 	Boolean canServeRequestType(Integer idRequestType) {
 		return requestTypeServable.stream().findAny().isPresent();
