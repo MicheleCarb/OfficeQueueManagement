@@ -3,9 +3,12 @@ package app;
 public class Ticket {
 	private Integer id;
 	private Integer idRequestType;
-	
-	Ticket() {
-		
+
+	private static int counter = 0;
+
+	Ticket(int idRequestType){
+		this.id = counter++;
+		this.idRequestType = idRequestType;
 	}
 	
 	Integer getId() {

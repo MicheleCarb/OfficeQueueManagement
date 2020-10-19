@@ -19,9 +19,9 @@ public class Service {
 		//Preparing for formatted output
 		String typeDate;
 		switch (DayWeekMonth) {
-			case 'w' -> typeDate = "Week";
-			case 'm' -> typeDate = "Month";
-			default -> typeDate = "Date";
+			case 'w' : typeDate = "Week";
+			case 'm' : typeDate = "Month";
+			default : typeDate = "Date";
 		}
 		ResultSet rs = officeDAO.getAllStats(DayWeekMonth);
 		System.out.printf("%20s %20s %20s\n","Request Type", "Customers", typeDate);
@@ -34,9 +34,9 @@ public class Service {
 		//Preparing for formatted output
 		String typeDate;
 		switch (DayWeekMonth) {
-			case 'w' -> typeDate = "Week";
-			case 'm' -> typeDate = "Month";
-			default -> typeDate = "Date";
+			case 'w' : typeDate = "Week";
+			case 'm' : typeDate = "Month";
+			default : typeDate = "Date";
 		}
 		ResultSet rs = officeDAO.getAllStatsByCounter(DayWeekMonth);
 		System.out.printf("%20s %20s %20s %20s\n","Request Type", "Counter", "Customers", typeDate);
@@ -51,15 +51,17 @@ public class Service {
 		requestTypes.add(new RequestType(tagName, averageTime));
 	}
 	
-	Ticket getTicket() {
+	Ticket getTicket(int idRequestType) {
+     //receive from the menu the id of the selected type of request
 
-		String tagName = null;
+		Ticket t = new Ticket(idRequestType);
 
-		// Calculating the minimum waiting time in minutes (as asked)
-		double Tr;
-		double tr = requestTypes.stream().filter(tagName).findFirst(tagName).getAverageTime();
+		requestTypes.stream()
+				.filter( requestType -> requestType.getId().equals(idRequestType) )
+				.collect(Collectors.toList()).get(0)
+				.addTicket(t);
 
-		return null;
+		return t;
 	}
 	
 	void watchTicketsInQueues() {
