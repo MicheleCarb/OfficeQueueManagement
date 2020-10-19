@@ -68,30 +68,16 @@ public class Main {
 				switch (input){
 					case 1:
 						//TODO: Handle getting ticket
-						if(date==null){
+						if(date==null)
 							System.out.println("Call the manager to insert a day\n");
-						}
-						else {
-							if (date.equals(datebefore)) {
-								//write here the code
-							} else {
-								service.resetQueues();
-								datebefore = date;
-							}
-						}
+
+
 						break;
 					case 2:
 						//TODO: Employee actions
-						if(date==null){
+						if(date==null)
 							System.out.println("Call the manager to insert a day\n");
-						}else {
-							if (date.equals(datebefore)) {
-								//write here the code
-							} else {
-								service.resetQueues();
-								datebefore = date;
-							}
-						}
+
 						break;
 					case 3:
 						//Manager actions
@@ -111,9 +97,14 @@ public class Main {
 									date= day +"/"+ month +"/"+ year;
 									if(dv.isThisDateValid(date,"dd/MM/yyyy")){
 										running_date=false;
+
 									}else{
 										System.out.println("Invalid Format Date inserted. Please try again...\n");
 									}
+								}
+								if (!date.equals(datebefore)) {
+									service.resetQueues();
+									datebefore = date;
 								}
 								break;
 							case 2:
