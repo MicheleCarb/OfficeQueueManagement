@@ -12,9 +12,9 @@ public class Counter {
 		this.id = countId++;
 		this.requestTypeServable = requestTypeServable;
 	}
-	
-	void nextCustomer(List<RequestType> requestTypes) {
-		
+
+	Integer count() {
+		return requestTypeServable.size();
 	}
 	
 	Boolean canServeRequestType(Integer idRequestType) {
