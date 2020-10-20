@@ -42,6 +42,10 @@ public class RequestType {
 		return this.id;
 	}
 	
+	String getTagName() {
+		return this.tagName;
+	}
+	
 	Float getAverageTime() {
 		return this.averageTime;
 	}

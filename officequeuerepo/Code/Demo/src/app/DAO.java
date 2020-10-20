@@ -4,10 +4,10 @@ import java.sql.*;
 
 public class DAO {
     private final static String URL = "jdbc:mysql://localhost:3306/office?serverTimezone=UTC";
-    private final static String USER = "admin";
-    private final static String PASSWORD = "admin";
+    private final static String USER = "root";
+    private final static String PASSWORD = "root";
     private final static String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private final Connection con;
+    private Connection con;
     //Queries
     private final static String NEW_REQUEST_QUERY = "INSERT INTO request_type (tag_name,avg_time) VALUES (?,?)";
     //Get how many customers have been served for each request type
@@ -23,8 +23,8 @@ public class DAO {
 
     //Constructor
     public DAO() throws SQLException, ClassNotFoundException {
-        Class.forName(DRIVER); //Loading driver
-        con = DriverManager.getConnection(URL, USER, PASSWORD); //Getting connection
+    	Class.forName(DRIVER); //Loading driver
+    	con = DriverManager.getConnection(URL, USER, PASSWORD); //Getting connection
     }
 
     //Closing connection
@@ -43,25 +43,25 @@ public class DAO {
 
     public ResultSet getAllStats(Character DayWeekMonth) throws SQLException {
         Statement st = con.createStatement();
-        return switch (DayWeekMonth) {
-            case 'w' -> st.executeQuery(GET_STATS_BASE_SELECT + ",WEEK(R.date) " +
+         switch (DayWeekMonth) {
+            case 'w' : return st.executeQuery(GET_STATS_BASE_SELECT + ",WEEK(R.date) " +
                     GET_STATS_BASE + " ,WEEK(R.date) ORDER BY RT.tag_name ASC");
-            case 'm' -> st.executeQuery(GET_STATS_BASE_SELECT + ",MONTH(R.date) " +
+            case 'm' : return st.executeQuery(GET_STATS_BASE_SELECT + ",MONTH(R.date) " +
                     GET_STATS_BASE + " ,MONTH(R.date) ORDER BY RT.tag_name ASC");
-            default -> st.executeQuery(GET_STATS_BASE_SELECT + ",R.date " +
+            default : return st.executeQuery(GET_STATS_BASE_SELECT + ",R.date " +
                     GET_STATS_BASE + " ,R.date ORDER BY RT.tag_name ASC");
-        };
+        }
     }
 
     public ResultSet getAllStatsByCounter(Character DayWeekMonth) throws SQLException {
         Statement st = con.createStatement();
-        return switch (DayWeekMonth) {
-            case 'w' -> st.executeQuery(GET_STATS_PER_COUNTER_SELECT + ",WEEK(R.date) " +
+        switch (DayWeekMonth) {
+            case 'w' : return st.executeQuery(GET_STATS_PER_COUNTER_SELECT + ",WEEK(R.date) " +
                     GET_STATS_PER_COUNTER + " ,WEEK(R.date) ORDER BY R.ref_counter ASC");
-            case 'm' -> st.executeQuery(GET_STATS_PER_COUNTER_SELECT + ",MONTH(R.date) " +
+            case 'm' : return st.executeQuery(GET_STATS_PER_COUNTER_SELECT + ",MONTH(R.date) " +
                     GET_STATS_PER_COUNTER + " ,MONTH(R.date) ORDER BY R.ref_counter ASC");
-            default -> st.executeQuery(GET_STATS_PER_COUNTER_SELECT + ",R.date " +
+            default : return st.executeQuery(GET_STATS_PER_COUNTER_SELECT + ",R.date " +
                     GET_STATS_PER_COUNTER + " ,R.date ORDER BY R.ref_counter ASC");
-        };
+        }
     }
 }

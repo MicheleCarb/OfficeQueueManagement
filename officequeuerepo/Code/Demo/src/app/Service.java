@@ -3,12 +3,15 @@ package app;
 import java.io.Console;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class Service {
-	List<RequestType> requestTypes;
-	List<Counter> counters;
+	LinkedList<RequestType> requestTypes = new LinkedList<>();
+	List<Counter> counters = new LinkedList<>();
 	DAO officeDAO;
 
 	public Service() throws SQLException, ClassNotFoundException {
@@ -49,6 +52,19 @@ public class Service {
 
 	void createDefinition(String tagName, Float averageTime) {
 		requestTypes.add(new RequestType(tagName, averageTime));
+	}
+	
+	void createCounter() {
+		System.out.println("Available request types:");
+		requestTypes.forEach(requestType -> System.out.println(requestType.getId() + " - " + requestType.getTagName() + "\n"));
+		
+		System.out.println("Enter which request types the new counter can serve, through a comma-separated list of ids: ");
+		Scanner scanner = new Scanner(System.in);
+		counters.add(new Counter(
+				Arrays.asList(scanner.nextLine().split("[,]"))
+				.stream().map(numberAsString -> Integer.parseUnsignedInt(numberAsString))
+				.collect(Collectors.toList()))
+		);
 	}
 	
 	Ticket getTicket(int idRequestType) {

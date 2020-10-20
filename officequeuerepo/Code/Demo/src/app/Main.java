@@ -51,9 +51,30 @@ public class Main {
 			int day,month,year;
 			DateValidator dv=new DateValidator();
 			//Configuration Phase
-			System.out.println("--- Configuration phase\n" +
-					"Insert < TagName AverageTime > or 0 to end phase");
-			//TODO Config phase
+			
+			System.out.println("--- Configuration phase\n");
+			try {
+				while (true) {
+					System.out.print("Insert a tag name and an average time separated by a space in order to add a request type; enter a digit to skip:");
+					if (scanner.hasNextInt()) {
+						scanner.nextInt(); // skip it
+						break;
+					}
+					service.createDefinition(scanner.next("[A-Za-z_][A-Za-z_0-9]*"), scanner.nextFloat());
+				}
+			} catch (InputMismatchException e) {
+				System.out.println("The last definition contained errors and so it hasn't been added.\n\n");
+				scanner.nextLine(); // get rid of the wrong input
+			}
+			
+			while (true) {
+				System.out.print("Do you want to add a counter? (Yes/No) ");
+				if (scanner.next().equals("Yes")) {
+					service.createCounter();
+				} else {
+					break;
+				}
+			}
 
 			//Start program
 			int input;
@@ -75,10 +96,24 @@ public class Main {
 						break;
 					case 2:
 						//TODO: Employee actions
-						if(date==null)
+						if(date==null) {
 							System.out.println("Call the manager to insert a day\n");
-
-						break;
+							break;
+						}
+						
+						System.out.println("1 - Call next customer\n");
+						System.out.println("2 - Return to Main Menu\n");
+						input = scanner.nextInt();
+						switch (input){
+							case 1:
+								System.out.println("What's your counter number?");
+								service.callNextCustomer(scanner.nextInt());
+								break;
+								
+							case 2:
+								break;
+						}
+						
 					case 3:
 						//Manager actions
 						System.out.println("1 - Insert the date of day\n");
