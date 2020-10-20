@@ -12,8 +12,11 @@ public class Ticket {
 		this.idRequestType = idRequestType;
 		this.Tr = Tr;
 	}
-	
-	Integer getId() {
-		return this.id;
-	}
+
+	@Override
+	public String toString() { return "ticket id:" + this.id + "waiting time:" + this.Tr ;}
+
+	public Integer getId() { return this.id; }
+	public Integer getIdRequestType() { return idRequestType; }
+	public float getTr() { return Tr; }
 }

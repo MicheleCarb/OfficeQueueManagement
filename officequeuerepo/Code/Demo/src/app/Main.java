@@ -89,9 +89,19 @@ public class Main {
 				switch (input){
 					case 1:
 						//TODO: Handle getting ticket
-						if(date==null)
+						if(date==null) {
 							System.out.println("Call the manager to insert a day\n");
+							break;
+						}
 
+						System.out.println("1 - Pay a bill");
+						System.out.println("2 - Send a package");
+						System.out.println("3 - Get a package");
+						input = scanner.nextInt();
+
+						Ticket t = service.getTicket(input);
+
+						System.out.println(t);
 
 						break;
 					case 2:
