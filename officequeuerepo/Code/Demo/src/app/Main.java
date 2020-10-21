@@ -3,11 +3,8 @@ package app;
 import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
 
 public class Main {
 
@@ -79,6 +76,7 @@ public class Main {
             System.out.print("--- End of configuration phase ---\n\n");
             
             while (running) {
+                service.watchTicketsInQueues();
                 System.out.print("\n\nChoose your set of actions:\n" +
                         "\t1 - Customer actions\n" +
                         "\t2 - Employee actions\n" +
