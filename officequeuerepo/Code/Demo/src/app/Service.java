@@ -10,12 +10,17 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class Service {
-	LinkedList<RequestType> requestTypes = new LinkedList<>();
-	List<Counter> counters = new LinkedList<>();
-	DAO officeDAO;
+	private LinkedList<RequestType> requestTypes = new LinkedList<>();
+	private List<Counter> counters = new LinkedList<>();
+	private DAO officeDAO;
 
 	public Service() throws SQLException, ClassNotFoundException {
 		this.officeDAO = new DAO();
+	}
+	
+
+	protected void finalize() throws SQLException {
+		officeDAO.close();
 	}
 
 	public void printAllStats(Character DayWeekMonth) throws SQLException {
@@ -56,9 +61,9 @@ public class Service {
 	
 	void createCounter() {
 		System.out.println("Available request types:");
-		requestTypes.forEach(requestType -> System.out.println(requestType.getId() + " - " + requestType.getTagName() + "\n"));
+		requestTypes.forEach(requestType -> System.out.print(requestType.getId() + " - " + requestType.getTagName() + "\n"));
 		
-		System.out.println("Enter which request types the new counter can serve, through a comma-separated list of ids: ");
+		System.out.print("Enter which request types the new counter can serve, through a comma-separated list of ids: ");
 		Scanner scanner = new Scanner(System.in);
 		counters.add(new Counter(
 				Arrays.asList(scanner.nextLine().split("[,]"))
@@ -168,7 +173,7 @@ public class Service {
 			System.out.println(e.getMessage());
 			return;
 		}
-		printTurn(queue.getId(), ticketId, queue.queue.size());
+		printTurn(queue.getId(), ticketId, queue.count());
 
 	}
 

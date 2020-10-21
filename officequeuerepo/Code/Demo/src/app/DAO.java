@@ -4,8 +4,8 @@ import java.sql.*;
 
 public class DAO {
     private final static String URL = "jdbc:mysql://localhost:3306/office?serverTimezone=UTC";
-    private final static String USER = "admin";
-    private final static String PASSWORD = "admin";
+    private final static String USER = "root";
+    private final static String PASSWORD = "root";
     private final static String DRIVER = "com.mysql.cj.jdbc.Driver";
     private Connection con;
     //Queries

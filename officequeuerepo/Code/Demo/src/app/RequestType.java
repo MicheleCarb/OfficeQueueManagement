@@ -7,7 +7,7 @@ public class RequestType {
 	private Integer id;
 	private String tagName;
 	private Float averageTime;
-	LinkedList<Ticket> queue = new LinkedList<>();
+	private LinkedList<Ticket> queue = new LinkedList<>();
 	
 	private static int idCount = 0;
 	
