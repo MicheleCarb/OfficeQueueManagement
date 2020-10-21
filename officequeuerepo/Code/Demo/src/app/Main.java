@@ -8,7 +8,6 @@ import java.util.Scanner;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-
 public class Main {
 
     public static void main(String[] args) {
@@ -52,6 +51,7 @@ public class Main {
             String date = sdf.format(cal.getTime()); //date in string
             service.resetQueues();
             while (running) {
+                service.watchTicketsInQueues();
                 System.out.println("Day: " + date + "\n");
                 System.out.println("--- Welcome to the office! Choose an option:\n" +
                         "1 - Get a ticket\n" +
