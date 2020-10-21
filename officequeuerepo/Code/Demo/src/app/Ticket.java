@@ -14,7 +14,7 @@ public class Ticket {
 	}
 
 	@Override
-	public String toString() { return "ticket id:" + this.id + "waiting time:" + this.Tr ;}
+	public String toString() { return "Ticket [ Id: " + this.id + " - Average waiting time: " + this.Tr + "s ]" ;}
 
 	public Integer getId() { return this.id; }
 	public Integer getIdRequestType() { return idRequestType; }

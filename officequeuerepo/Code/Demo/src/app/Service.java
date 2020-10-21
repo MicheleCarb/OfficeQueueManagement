@@ -141,7 +141,7 @@ public class Service {
 		RequestType queue = requestTypes.stream()
 				.filter(requestType -> counter.canServeRequestType(requestType.getId()))
 				.sorted((requestType1, requestType2) -> {
-					if (requestType1.count() != requestType2.count())
+					if (!requestType1.count().equals(requestType2.count()))
 						return requestType1.count().compareTo(requestType2.count());
 					else
 						return requestType1.getAverageTime().compareTo(requestType2.getAverageTime());
@@ -157,13 +157,15 @@ public class Service {
 			System.out.println(e.getMessage());
 			return;
 		}
-		printTurn(queue.getId(), ticketId);
+		printTurn(queue.getId(), ticketId, queue.queue.size());
 
 		
 	}
 
-	void printTurn(Integer id, Integer ticketId) {
-		System.out.println("We are now serving: " + id + "-" + ticketId);
+	void printTurn(Integer id, Integer ticketId, Integer peopleWaiting) {
+		System.out.printf("%50s\n","Counters");
+		System.out.printf("%10s - %10s - %10s\n", "Counter", "Ticket #", "People in queue");
+		System.out.printf("%10s - %10s - %10s\n", id, ticketId, peopleWaiting);
 	}
 	
 	void watchStatistics() {

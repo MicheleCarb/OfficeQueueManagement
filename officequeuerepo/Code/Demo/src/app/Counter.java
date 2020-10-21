@@ -20,4 +20,6 @@ public class Counter {
 	Boolean canServeRequestType(Integer idRequestType) {
 		return requestTypeServable.stream().findAny().isPresent();
 	}
+
+	public Integer getId() { return id; }
 }

@@ -11,19 +11,13 @@ CREATE TABLE request_type
     avg_time int         not null
 );
 
-CREATE TABLE counter
-(
-    id int not null primary key
-);
-
 CREATE TABLE request
 (
     id          int  not null auto_increment primary key,
     ref_counter int  not null,
     ref_type    int  not null,
     date        date not null,
-    foreign key (ref_type) references request_type (id),
-    foreign key (ref_counter) references counter (id)
+    foreign key (ref_type) references request_type (id)
 );
 
 -- Testing data --
@@ -33,13 +27,6 @@ INSERT INTO request_type (tag_name, avg_time)
 VALUES ('Invoices', 30.4);
 INSERT INTO request_type (tag_name, avg_time)
 VALUES ('Credit Card', 50.4);
-
-INSERT INTO counter
-VALUES (1);
-INSERT INTO counter
-VALUES (2);
-INSERT INTO counter
-VALUES (3);
 
 INSERT INTO request (ref_counter, ref_type, date)
 VALUES (1, 1, '2020-10-18');

@@ -4,12 +4,13 @@ import java.sql.*;
 
 public class DAO {
     private final static String URL = "jdbc:mysql://localhost:3306/office?serverTimezone=UTC";
-    private final static String USER = "root";
-    private final static String PASSWORD = "root";
+    private final static String USER = "admin";
+    private final static String PASSWORD = "admin";
     private final static String DRIVER = "com.mysql.cj.jdbc.Driver";
     private Connection con;
     //Queries
-    private final static String NEW_REQUEST_QUERY = "INSERT INTO request_type (tag_name,avg_time) VALUES (?,?)";
+    private final static String NEW_REQUEST_TYPE_QUERY = "INSERT INTO request_type (tag_name,avg_time) VALUES (?,?)";
+    private final static String NEW_REQUEST_QUERY = "INSERT INTO request (ref_counter, ref_type, date) VALUES (?,?,NOW())";
     //Get how many customers have been served for each request type
     private final static String GET_STATS_BASE_SELECT = "SELECT RT.tag_name as Request_Type, COUNT(*) AS Customers";
     private final static String GET_STATS_BASE = "FROM request R, request_type RT " +
@@ -34,10 +35,18 @@ public class DAO {
 
     //DB query functions
     public void createRequestType(String tagName, Float avgTime) throws SQLException {
-        PreparedStatement pst = con.prepareStatement(NEW_REQUEST_QUERY);
+        PreparedStatement pst = con.prepareStatement(NEW_REQUEST_TYPE_QUERY);
         //Setting parameters
         pst.setString(1, tagName);
         pst.setFloat(2, avgTime);
+        pst.execute(); //Executing query
+    }
+
+    public void insertRequest(Integer counterId, Integer reqTypeId) throws SQLException {
+        PreparedStatement pst = con.prepareStatement(NEW_REQUEST_TYPE_QUERY);
+        //Setting parameters
+        pst.setInt(1, counterId);
+        pst.setInt(2, reqTypeId);
         pst.execute(); //Executing query
     }
 
