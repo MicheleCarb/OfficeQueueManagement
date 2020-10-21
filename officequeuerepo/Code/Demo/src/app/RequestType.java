@@ -21,8 +21,12 @@ public class RequestType {
 		queue.addLast(t);
 	}
 	
-	Integer removeTicket() { // Return the first ticket in the queue
-		return queue.removeFirst().getId();
+	Integer removeTicket() throws Exception { // Return the first ticket in the queue
+		try {
+			return queue.removeFirst().getId();
+		} catch (Exception e) {
+			throw new Exception("No customer is waiting for " + this.toString());
+		}
 	}
 	
 	@Override

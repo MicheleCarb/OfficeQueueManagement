@@ -67,10 +67,18 @@ public class Service {
 		);
 	}
 	
-	Ticket getTicket(int idRequestType) {
+	Ticket getTicket() {
      //receive from the menu the id of the selected type of request
 
+		System.out.println("Available request types:");
+		requestTypes.forEach(requestType -> System.out.println(requestType.getId() + " - " + requestType.getTagName() + "\n"));
+		
+		
 		float Tr;
+		
+		System.out.println("Enter which request type you want: ");
+		Scanner scanner = new Scanner(System.in);
+		Integer idRequestType = scanner.nextInt();
 
 		float tr = requestTypes.stream()
 				.filter(requestType -> requestType.getId().equals(idRequestType))
@@ -134,7 +142,7 @@ public class Service {
 				.filter(requestType -> counter.canServeRequestType(requestType.getId()))
 				.sorted((requestType1, requestType2) -> {
 					if (requestType1.count() != requestType2.count())
-						return requestType1.count() - requestType2.count();
+						return requestType1.count().compareTo(requestType2.count());
 					else
 						return requestType1.getAverageTime().compareTo(requestType2.getAverageTime());
 				})
@@ -142,7 +150,13 @@ public class Service {
 				.get()
 				;
 		
-		Integer ticketId = queue.removeTicket();
+		Integer ticketId;
+		try {
+			ticketId = queue.removeTicket();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return;
+		}
 		printTurn(queue.getId(), ticketId);
 
 		

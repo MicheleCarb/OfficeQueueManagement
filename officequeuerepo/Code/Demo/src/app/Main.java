@@ -38,8 +38,10 @@ public class Main {
 			}
 			
 			while (true) {
-				System.out.print("Do you want to add a counter? (Yes/No) ");
-				if (scanner.next().equals("Yes")) {
+				System.out.print("Do you want to add a counter?\n ");
+				System.out.println("1 - Yes\n");
+				System.out.println("2 - No\n");
+				if (scanner.nextInt() == 1) {
 					service.createCounter();
 				} else {
 					break;
@@ -75,12 +77,8 @@ public class Main {
 							switch (input){
 								case 1:
 									//TODO: Handle getting ticket
-									System.out.println("1 - Pay a bill");
-									System.out.println("2 - Send a package");
-									System.out.println("3 - Get a package");
-									input = scanner.nextInt();
 
-									Ticket t = service.getTicket(input);
+									Ticket t = service.getTicket();
 
 									System.out.println(t);
 									break;
@@ -96,9 +94,10 @@ public class Main {
 											service.callNextCustomer(scanner.nextInt());
 											break;
 
-										case 2:
+										default:
 											break;
 									}
+									break;
 
 								case 3:
 									//Manager actions
