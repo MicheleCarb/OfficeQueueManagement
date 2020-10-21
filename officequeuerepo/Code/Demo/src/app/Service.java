@@ -107,8 +107,12 @@ public class Service {
 		return t;
 	}
 	
-	void watchTicketsInQueues() {
-		
+	//show the waiting tickets in the digital display board 
+	void watchTicketsInQueues(Ticket[] ticsToShow) {
+		System.out.println("Ticet number   " + "RequestType   " + "Wating time");
+		for (Ticket tic: ticsToShow) {
+			System.out.println(tic.id + "   " + tic.idRequestType + "   " + tic.Tr);
+		}
 	}
 	
 	void callNextCustomer(Integer counterId) {
