@@ -30,10 +30,12 @@ public class Service {
         }
         ResultSet rs = officeDAO.getAllStats(DayWeekMonth);
         System.out.printf("%20s %20s %20s\n", "Request Type", "Customers", typeDate);
-        if (rs.getFetchSize() == 0) System.out.printf("%40s\n","No data to show");
-        else
-            while (rs.next())
+        if (!rs.next()) System.out.printf("%40s\n", "No data to show");
+        else {
+            do {
                 System.out.printf("%20s %20d %20s\n", rs.getString(1), rs.getInt(2), rs.getString(3));
+            } while (rs.next());
+        }
     }
 
     public void printAllStatsByCounter(Character DayWeekMonth) throws SQLException {
@@ -49,13 +51,14 @@ public class Service {
         }
         ResultSet rs = officeDAO.getAllStatsByCounter(DayWeekMonth);
         System.out.printf("%20s %20s %20s %20s\n", "Request Type", "Counter", "Customers", typeDate);
-        if (rs.getFetchSize() == 0) System.out.printf("%50s\n","No data to show");
-        else
-            while (rs.next()) {
+        if (!rs.next()) System.out.printf("%50s\n", "No data to show");
+        else {
+            do {
                 System.out.printf("%20s %20d %20s %20s\n",
                         rs.getString(1), rs.getInt(2),
                         rs.getInt(3), rs.getString(4));
-            }
+            } while (rs.next());
+        }
     }
 
     void createDefinition(String tagName, Float averageTime) {
