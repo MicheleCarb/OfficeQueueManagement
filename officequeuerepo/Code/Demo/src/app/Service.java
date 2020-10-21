@@ -140,16 +140,26 @@ public class Service {
 //			.max((requestType1, requestType2) -> requestType1.getAverageTime().compareTo(requestType2.getAverageTime()))
 //			.get()
 //			;
-		
-		
+
+
 		RequestType queue = requestTypes.stream()
-				.filter(requestType -> counter.canServeRequestType(requestType.getId()))
-				.sorted((requestType1, requestType2) -> {
+				.filter(requestType -> {
+					//System.out.println(counter.canServeRequestType(requestType.getId()));
+					return counter.canServeRequestType(requestType.getId());
+				})
+				.sorted(((requestType1, requestType2) -> {
 					if (!requestType1.count().equals(requestType2.count()))
-						return requestType1.count().compareTo(requestType2.count());
+						return requestType2.count().compareTo(requestType1.count());
 					else
-						return requestType1.getAverageTime().compareTo(requestType2.getAverageTime());
-				}).findFirst().get();
+						return requestType2.getAverageTime().compareTo(requestType1.getAverageTime());
+				}))
+				.filter(requestType -> {
+					//System.out.println(requestType);
+					return true;
+				})
+				.findFirst()
+				.get()
+				;
 		
 		Integer ticketId;
 		try {
@@ -160,7 +170,6 @@ public class Service {
 		}
 		printTurn(queue.getId(), ticketId, queue.queue.size());
 
-		
 	}
 
 	void printTurn(Integer id, Integer ticketId, Integer peopleWaiting) {
@@ -168,15 +177,6 @@ public class Service {
 		System.out.printf("%10s - %10s - %10s\n", "Counter", "Ticket #", "People in queue");
 		System.out.printf("%10s - %10s - %10s\n", id, ticketId, peopleWaiting);
 	}
-	
-	void watchStatistics() {
-		
-	}
-
-	void printAllStats(){
-
-	}
-
 
 	//reset all queues every morning
 	void resetQueues(){
