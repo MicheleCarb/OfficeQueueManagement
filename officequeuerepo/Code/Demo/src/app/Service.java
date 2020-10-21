@@ -107,11 +107,11 @@ public class Service {
 		return t;
 	}
 	
-	//show the waiting tickets in the digital display board 
+	//Show the waiting tickets in the digital display board
 	void watchTicketsInQueues(Ticket[] ticsToShow) {
-		System.out.println("Ticet number   " + "RequestType   " + "Wating time");
+		System.out.println("Ticket number\t" + "RequestType\t" + "Waiting time");
 		for (Ticket tic: ticsToShow) {
-			System.out.println(tic.id + "   " + tic.idRequestType + "   " + tic.Tr);
+			System.out.println(tic.getId() + "\t" + tic.getIdRequestType() + "\t" + tic.getTr());
 		}
 	}
 	
@@ -149,10 +149,7 @@ public class Service {
 						return requestType1.count().compareTo(requestType2.count());
 					else
 						return requestType1.getAverageTime().compareTo(requestType2.getAverageTime());
-				})
-				.findFirst()
-				.get()
-				;
+				}).findFirst().get();
 		
 		Integer ticketId;
 		try {
