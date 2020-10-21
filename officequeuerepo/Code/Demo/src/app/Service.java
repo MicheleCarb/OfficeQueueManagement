@@ -163,7 +163,7 @@ public class Service {
 	}
 
 	void printTurn(Integer id, Integer ticketId) {
-		System.out.println("We are now serving: " + id + "-" + ticketId);
+		System.out.println("We are now serving ticket number " + ticketId + " on counter " + id);
 	}
 	
 	void watchStatistics() {

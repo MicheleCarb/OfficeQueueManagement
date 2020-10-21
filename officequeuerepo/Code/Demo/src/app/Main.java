@@ -114,6 +114,7 @@ public class Main {
 									break;
 								case 4:
 									running = false;
+									running_date = false;
 									System.out.println("Shutting down ...");
 									break;
 							}
