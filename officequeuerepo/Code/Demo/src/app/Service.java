@@ -30,9 +30,10 @@ public class Service {
         }
         ResultSet rs = officeDAO.getAllStats(DayWeekMonth);
         System.out.printf("%20s %20s %20s\n", "Request Type", "Customers", typeDate);
-        while (rs.next()) {
-            System.out.printf("%20s %20d %20s\n", rs.getString(1), rs.getInt(2), rs.getString(3));
-        }
+        if (rs.getFetchSize() == 0) System.out.printf("%40s\n","No data to show");
+        else
+            while (rs.next())
+                System.out.printf("%20s %20d %20s\n", rs.getString(1), rs.getInt(2), rs.getString(3));
     }
 
     public void printAllStatsByCounter(Character DayWeekMonth) throws SQLException {
@@ -48,11 +49,13 @@ public class Service {
         }
         ResultSet rs = officeDAO.getAllStatsByCounter(DayWeekMonth);
         System.out.printf("%20s %20s %20s %20s\n", "Request Type", "Counter", "Customers", typeDate);
-        while (rs.next()) {
-            System.out.printf("%20s %20d %20s %20s\n",
-                    rs.getString(1), rs.getInt(2),
-                    rs.getInt(3), rs.getString(4));
-        }
+        if (rs.getFetchSize() == 0) System.out.printf("%50s\n","No data to show");
+        else
+            while (rs.next()) {
+                System.out.printf("%20s %20d %20s %20s\n",
+                        rs.getString(1), rs.getInt(2),
+                        rs.getInt(3), rs.getString(4));
+            }
     }
 
     void createDefinition(String tagName, Float averageTime) {
@@ -81,7 +84,7 @@ public class Service {
 
         float Tr;
 
-        System.out.println("Enter which request type you want: ");
+        System.out.println("Enter which request type you want:");
         Scanner scanner = new Scanner(System.in);
         Integer idRequestType = scanner.nextInt();
 
@@ -126,30 +129,6 @@ public class Service {
                 .findFirst()
                 .get();
 
-        // Sorting requires n*log(n) steps, while the following approach is faster.
-
-
-//		List<RequestType> servableRequests = requestTypes.stream()
-//			.filter(requestType -> counter.canServeRequestType(requestType.getId()))
-//			.collect(Collectors.toList());
-//		
-//		Integer currentMaxSize = servableRequests.stream()
-//			.max((requestType1, requestType2) -> requestType1.count() - requestType2.count())
-//			.get()
-//			.count();
-//			;
-//			
-//		servableRequests = servableRequests.stream()
-//			.filter(requestType -> requestType.count().equals(currentMaxSize))
-//			.collect(Collectors.toList());
-//			;
-//		
-//		servableRequests.stream()
-//			.max((requestType1, requestType2) -> requestType1.getAverageTime().compareTo(requestType2.getAverageTime()))
-//			.get()
-//			;
-
-
         RequestType queue = requestTypes.stream()
                 .filter(requestType -> {
                     //System.out.println(counter.canServeRequestType(requestType.getId()));
@@ -181,7 +160,7 @@ public class Service {
         System.out.printf("%10d %10s %10d %10d\n", id, tagName, ticketId, peopleWaiting);
     }
 
-    //reset all queues every morning
+    //Reset all queues every morning
     void resetQueues() {
         for (RequestType rt : requestTypes) {
             rt.reset();

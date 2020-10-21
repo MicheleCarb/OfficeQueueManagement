@@ -3,8 +3,6 @@ package app;
 import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -87,8 +85,13 @@ public class Main {
                                 "1 - How many customers have been served for each request type\n" +
                                 "2 - The number of customers each counter has served divided by request type");
                         //Getting input
-                        input = scanner.nextInt();
-                        char filter = scanner.next().charAt(0);
+                        char filter = 0;
+                        try {
+                            input = scanner.nextInt();
+                            filter = scanner.next().charAt(0);
+                        }catch ( InputMismatchException exc ){
+                            System.err.println("Error on input!");
+                        }
                         if (input == 1) service.printAllStats(filter);
                         else if (input == 2) service.printAllStatsByCounter(filter);
                         else System.err.println("Error on input");
