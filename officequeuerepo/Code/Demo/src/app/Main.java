@@ -76,15 +76,10 @@ public class Main {
 							//Menu handler
 							switch (input){
 								case 1:
-									//TODO: Handle getting ticket
-
 									Ticket t = service.getTicket();
-
 									System.out.println(t);
 									break;
 								case 2:
-									//TODO: Employee actions
-
 									System.out.println("1 - Call next customer\n");
 									System.out.println("2 - Return to Main Menu\n");
 									input = scanner.nextInt();
@@ -93,7 +88,6 @@ public class Main {
 											System.out.println("What's your counter number?");
 											service.callNextCustomer(scanner.nextInt());
 											break;
-
 										default:
 											break;
 									}
