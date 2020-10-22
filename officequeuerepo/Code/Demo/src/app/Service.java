@@ -2,10 +2,7 @@ package app;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Service {
@@ -86,12 +83,12 @@ public class Service {
         //receive from the menu the id of the selected type of request
 
         System.out.println("Available request types:");
-        requestTypes.forEach(requestType -> System.out.println(requestType.getId() + " - " + requestType.getTagName() + "\n"));
+        requestTypes.forEach(requestType -> System.out.println(requestType.getId() + " - " + requestType.getTagName()));
 
 
         float Tr;
 
-        System.out.println("Enter which request type you want:");
+        System.out.print("Enter which request type you want: ");
         Scanner scanner = new Scanner(System.in);
         Integer idRequestType = scanner.nextInt();
 
@@ -124,13 +121,15 @@ public class Service {
 
     //Show the waiting tickets in the digital display board
     void watchTicketsInQueues() {
-        System.out.println("Request Type\t" + "People in queue");
+        System.out.printf("\n%40s\n","----------- COUNTERS' QUEUES -----------");
+        System.out.printf("%18s %18s\n","Request Type","People in queue");
         for (RequestType reqType : requestTypes) {
-            System.out.print("- " + reqType.getTagName() + "\t" + reqType.count() + "\n");
+            System.out.printf("%18s %18s\n",reqType.getTagName(), reqType.count());
         }
+        System.out.printf("%40s\n","----------------------------------------");
     }
 
-    void callNextCustomer(Integer counterId) throws SQLException {
+    void callNextCustomer(Integer counterId) throws SQLException, NoSuchElementException {
         Counter counter = counters.stream()
                 .filter(cnt -> cnt.getId().equals(counterId))
                 .findFirst()
@@ -162,9 +161,10 @@ public class Service {
     }
 
     void printTurn(Integer id, Integer ticketId, Integer peopleWaiting, String tagName) {
-        System.out.printf("%50s\n", "Counters");
+        System.out.printf("\n%60s\n", "------------------ NEW CUSTOMER IS SERVED ------------------");
         System.out.printf("%10s - %10s - %10s - %10s\n", "Counter", "Queue Type", "Ticket #", "People in queue");
         System.out.printf("%10d %10s %10d %10d\n", id, tagName, ticketId, peopleWaiting);
+        System.out.printf("%60s\n", "------------------------------------------------------------");
     }
 
     //Reset all queues every morning

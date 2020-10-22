@@ -2,6 +2,7 @@ package app;
 
 import java.sql.SQLException;
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -17,20 +18,20 @@ public class Main {
             Integer command;
 
             //Configuration Phase
-            System.out.print("--- Configuration phase ---\n\n");
+                System.out.print("--- CONFIGURATION PHASE ---\n");
             
             command = 1;
-            System.out.print("Add the first request type:\n");
+            System.out.println("--- Add the first request type");
             while (command.equals(1)) {
-            	System.out.print("Insert a tag name and an average time separated by a space: ");
+            	System.out.println("Insert a tag name and an average time separated by a space:");
             	try {
                     service.createDefinition(scanner.next("[A-Za-z_][A-Za-z_0-9]*"), scanner.nextFloat());
                 } catch (InputMismatchException e) {
-                    System.out.println("\nThe last definition contained errors and so it hasn't been added.\n\n");
+                    System.out.println("The last definition contained errors and so it hasn't been added\n");
                     scanner.nextLine(); // get rid of the wrong input
                 }
             	
-            	System.out.print("\nDo you want to add further request types?\n" +
+            	System.out.print("Do you want to add further request types?\n" +
                         "\t1 - Yes\n" +
                         "\t2 - No\n" +
                         "Command: ");
@@ -53,7 +54,7 @@ public class Main {
 //            }
 
             command = 1;
-            System.out.print("Add the first counter:\n");
+            System.out.println("--- Add the first counter");
             while (command.equals(1)) {
                 service.createCounter();
                 
@@ -70,14 +71,14 @@ public class Main {
             //Use calendar
             Calendar cal = Calendar.getInstance();
             String date = sdf.format(cal.getTime()); //date in string
-            System.out.print("Today is " + date + "\n");
+            System.out.println("Today is " + date);
             service.resetQueues();
             
-            System.out.print("--- End of configuration phase ---\n\n");
+            System.out.println("--- End of configuration phase ---\n");
             
             while (running) {
                 service.watchTicketsInQueues();
-                System.out.print("\n\nChoose your set of actions:\n" +
+                System.out.print("Choose your set of actions:\n" +
                         "\t1 - Customer actions\n" +
                         "\t2 - Employee actions\n" +
                         "\t3 - Manager actions\n" +
@@ -99,7 +100,7 @@ public class Main {
                         
                             case 1:
                             	Ticket t = service.getTicket();
-                                System.out.println(t);
+                                System.out.println("\nNEW TICKET:\n" + t);
                                 break;
                                 
                             default:
@@ -117,11 +118,16 @@ public class Main {
                         System.out.print("\n\n");
                         switch (command) {
                             case 1:
-                                System.out.println("Enter your counter id: ");
-                                service.callNextCustomer(scanner.nextInt());
-                                System.out.print("\n\n");
+                                try {
+                                    System.out.print("Enter your counter id: ");
+                                    service.callNextCustomer(scanner.nextInt());
+                                    System.out.print("\n\n");
+                                } catch ( NoSuchElementException exc ){
+                                    System.out.println("Error on input");
+                                }
                                 break;
                             default:
+                                System.out.println("Error on input");
                                 break;
                         }
                         break;
@@ -154,7 +160,7 @@ public class Main {
                         
                         if (command == 1) service.printAllStats(filter);
                         else if (command == 2) service.printAllStatsByCounter(filter);
-                        else System.err.print("Command not recognized\n\n");
+                        else System.err.println("Command not recognized\n");
                         break;
                         
                     case 4:
